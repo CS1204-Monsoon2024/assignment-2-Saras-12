@@ -1,4 +1,4 @@
-Default: 
+default: 
 	# write the command for compiling main.cpp to main.out
 	
 
