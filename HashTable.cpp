@@ -105,7 +105,7 @@ public:
         int index;
         while (i < size) {
             index = quadraticProbing(key, i);
-            if (table[index] == key) {
+            if (table[index] == key && !isDeleted[index]) {
                 return index;  
             } else if (table[index] == -1 && !isDeleted[index]) {
                 return -1;  
