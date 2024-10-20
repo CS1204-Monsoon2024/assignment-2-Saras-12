@@ -7,16 +7,19 @@ private:
     std::vector<bool> isDeleted;  
     int size;  
     int count;  
-    const double loadFactorThreshold = 0.8;  
+    static const double loadFactorThreshold;  // Change here
 
+    // Hash function
     int hashFunction(int key) {
         return key % size;
     }
 
+    // Quadratic probing to resolve collisions
     int quadraticProbing(int key, int i) {
         return (hashFunction(key) + i * i) % size;
     }
 
+    // Check if a number is prime (for resizing)
     bool isPrime(int num) {
         if (num <= 1) return false;
         for (int i = 2; i * i <= num; ++i) {
@@ -25,6 +28,7 @@ private:
         return true;
     }
 
+    // Find the next prime number larger than the current size
     int nextPrime(int num) {
         while (!isPrime(num)) {
             num++;
@@ -32,6 +36,7 @@ private:
         return num;
     }
 
+    // Resize the hash table
     void resize() {
         int newSize = nextPrime(2 * size);
         std::vector<int> oldTable = table;
@@ -49,6 +54,7 @@ private:
     }
 
 public:
+    // Constructor
     HashTable(int initialSize) {
         size = nextPrime(initialSize);
         table = std::vector<int>(size, -1);
@@ -56,6 +62,7 @@ public:
         count = 0;
     }
 
+    // Insert a key into the hash table
     void insert(int key) {
         if ((double)count / size > loadFactorThreshold) {
             resize();
@@ -80,6 +87,7 @@ public:
         std::cout << "Max probing limit reached!" << std::endl;
     }
 
+    // Remove a key from the hash table
     void remove(int key) {
         int i = 0;
         int index;
@@ -100,6 +108,7 @@ public:
         std::cout << "Element not found" << std::endl;
     }
 
+    // Search for a key and return its index
     int search(int key) {
         int i = 0;
         int index;
@@ -115,6 +124,7 @@ public:
         return -1;  
     }
 
+    // Print the hash table
     void printTable() {
         for (int i = 0; i < size; ++i) {
             if (table[i] == -1 || isDeleted[i]) {
@@ -126,3 +136,6 @@ public:
         std::cout << std::endl;
     }
 };
+
+// Initialize static const member
+const double HashTable::loadFactorThreshold = 0.8;
