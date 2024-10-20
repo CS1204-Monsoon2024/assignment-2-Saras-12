@@ -1,7 +1,21 @@
-default: 
-	# write the command for compiling main.cpp to main.out
-	
+# Makefile
 
+# Compiler
+CXX = g++
+CXXFLAGS = -Wall -Wextra -std=c++11
+
+# Target executable
+TARGET = main.out
+
+# Source files
+SRCS = HashTable.cpp main.cpp
+
+# Build target
+all: $(TARGET)
+
+$(TARGET): $(SRCS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRCS)
+
+# Clean up build files
 clean:
-	rm *.out
-	# clean up all .out files
+	rm -f $(TARGET)
